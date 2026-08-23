@@ -5,6 +5,8 @@ import json
 import re
 from typing import Any
 
+from pathlib import Path
+
 from .config import ResearchBriefConfig
 from .models import (
     BriefEvaluationDimensions,
@@ -14,7 +16,36 @@ from .models import (
     ResearchBriefResult,
     ResearchTask,
 )
-from .prompts import RESEARCH_BRIEF_INSTRUCTIONS, RESEARCH_BRIEF_SYSTEM_PROMPT
+
+_PROMPT_FILE = Path(__file__).resolve().parents[3] / "prompt" / "ResearchBrief.md"
+if _PROMPT_FILE.exists():
+    RESEARCH_BRIEF_SYSTEM_PROMPT = _PROMPT_FILE.read_text(encoding="utf-8").strip()
+else:
+    RESEARCH_BRIEF_SYSTEM_PROMPT = (
+        "You are the Research Brief Agent in a multi-agent research system. "
+        "You receive a clarified user request and write a comprehensive, exhaustive, "
+        "and descriptive research mission for a Supervisor Agent spanning at least one "
+        "full page of structured domain intelligence. Return plain Markdown prose only."
+    )
+
+RESEARCH_BRIEF_INSTRUCTIONS = """{system_prompt}
+
+<CLARIFIED_REQUEST>
+{clarified_request}
+</CLARIFIED_REQUEST>
+<ORIGINAL_QUERY>
+{original_query}
+</ORIGINAL_QUERY>
+<CONTEXT>
+{context}
+</CONTEXT>
+<CONSTRAINTS>
+{constraints}
+</CONSTRAINTS>
+<CLARIFICATION_NOTES>
+{clarification_notes}
+</CLARIFICATION_NOTES>
+"""
 
 
 class _PlanningAgent:
