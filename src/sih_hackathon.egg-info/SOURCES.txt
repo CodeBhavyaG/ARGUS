@@ -1,0 +1,17 @@
+README.md
+pyproject.toml
+src/sih_hackathon/__init__.py
+src/sih_hackathon/main.py
+src/sih_hackathon/state.py
+src/sih_hackathon.egg-info/PKG-INFO
+src/sih_hackathon.egg-info/SOURCES.txt
+src/sih_hackathon.egg-info/dependency_links.txt
+src/sih_hackathon.egg-info/requires.txt
+src/sih_hackathon.egg-info/top_level.txt
+src/sih_hackathon/research_brief/__init__.py
+src/sih_hackathon/research_brief/config.py
+src/sih_hackathon/research_brief/graph_node.py
+src/sih_hackathon/research_brief/models.py
+src/sih_hackathon/research_brief/prompts.py
+src/sih_hackathon/research_brief/service.py
+tests/test_research_brief.py

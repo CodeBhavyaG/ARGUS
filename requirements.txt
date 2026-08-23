@@ -1,6 +1,31 @@
-langgraph
-langchain
-dotenv
-pydantic
-langchain-groq
-langchain-community
+# Core LangGraph and LangChain
+langgraph>=0.2.0
+langchain>=0.3.0
+langchain-core>=0.3.0
+
+# Data validation and models
+pydantic>=2.5.0
+
+# Environment variable management
+python-dotenv>=1.0.0
+reportlab>=4.0.0
+groq>=0.30.0
+
+# LLM providers (choose based on your needs)
+langchain-openai>=0.2.0
+langchain-anthropic>=0.2.0
+# langchain-kimi>=0.1.0  # Uncomment if using Kimi
+
+# Async HTTP client (for API calls)
+httpx>=0.25.0
+
+# Web search APIs (choose one or more)
+tavily-python>=0.3.0
+# duckduckgo-search>=2023.12.0  # Alternative: uncomment if using DuckDuckGo
+
+# Utilities
+typing-extensions>=4.9.0
+
+# Development and testing (optional)
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
