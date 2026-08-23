@@ -1,9 +1,9 @@
 import pytest
 
 from sih_hackathon.research_brief.config import ResearchBriefConfig
-from sih_hackathon.research_brief.graph_node import ResearchBriefNode
 from sih_hackathon.research_brief.models import ResearchBriefInput
 from sih_hackathon.research_brief.service import ResearchBriefService
+from main import research_brief_node
 
 
 class ProseLLM:
@@ -28,6 +28,6 @@ async def test_offline_fallback_preserves_ambiguity_and_never_researches():
 
 @pytest.mark.asyncio
 async def test_node_hands_brief_to_supervisor_contract():
-    update = await ResearchBriefNode(config=ResearchBriefConfig(llm_provider="local", llm_api_key=None)).execute({"request_id": "r3", "query": "raw", "clarified_request": "Compare electric and hybrid vehicles."})
+    update = await research_brief_node({"query": "raw", "clarified_request": "Compare electric and hybrid vehicles.", "offline": True})
     assert update["research_brief"] == update["supervisor_input"]
     assert "Overall score:" in update["brief_self_evaluation"]
