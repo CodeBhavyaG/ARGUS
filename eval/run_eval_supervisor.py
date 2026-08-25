@@ -14,8 +14,8 @@ project_root = Path(__file__).resolve().parent.parent
 if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
 
-from eval.eval_cases_supervisor import EVALUATION_CASES
-from eval.evaluator_supervisor import SupervisorEvaluator
+from eval.eval_cases import EVALUATION_CASES
+from eval.evaluator import SupervisorEvaluator
 from agent.Superviser import run_supervisor
 
 

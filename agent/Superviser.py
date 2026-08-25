@@ -1,6 +1,5 @@
 import os
 import sys
-import re
 from pathlib import Path
 from langchain.messages import HumanMessage
 import json
@@ -18,11 +17,9 @@ from state import SupervisorState
 load_dotenv()
 api_key = os.getenv("api_key") or os.getenv("GROQ_API_KEY")
 
-def get_llm(api_key: str | None = None, model_name: str = "qwen/qwen3.6-27b", temperature: float = 0.1) -> ChatGroq | None:
+def get_llm(api_key: str | None = None, model_name: str = "qwen/qwen3.6-27b", temperature: float = 0.1) -> ChatGroq:
     """Initialize and return the Groq Chat model."""
     key = api_key or os.getenv("api_key") or os.getenv("GROQ_API_KEY")
-    if not key or key in ("your_groq_api_key_here", "api_key_value"):
-        return None
     return ChatGroq(
         model_name=model_name,
         api_key=key,
@@ -40,8 +37,6 @@ def create_supervisor_agent(llm_model=None):
     """Create a structured Supervisor Agent instance."""
     if llm_model is None:
         llm_model = get_llm()
-    if llm_model is None:
-        raise ValueError("Cannot create supervisor agent: Groq API key is not configured.")
     system_prompt = get_system_prompt()
     return create_agent(
         model=llm_model,
@@ -50,78 +45,19 @@ def create_supervisor_agent(llm_model=None):
         response_format=SupervisorState,
     )
 
-_default_agent = None
-
-def get_default_agent():
-    global _default_agent
-    if _default_agent is None:
-        llm_model = get_llm()
-        if llm_model is not None:
-            _default_agent = create_supervisor_agent(llm_model)
-    return _default_agent
+# Module-level agent and llm for backward compatibility
+llm = get_llm()
+agent = create_supervisor_agent(llm)
 
 def run_supervisor(brief: str, supervisor_agent=None) -> SupervisorState:
     """
     Invoke the supervisor agent on a given research brief and return SupervisorState.
     """
-    clean_brief = re.sub(r'<think>.*?</think>', '', brief, flags=re.DOTALL).strip()
-    header_match = re.search(r'(#*\s*1\.\s*Research Question.*|#*\s*Research Brief.*|##*\s*Research Question.*)', clean_brief, flags=re.DOTALL | re.IGNORECASE)
-    if header_match:
-        clean_brief = header_match.group(1).strip()
-
-    # If mock agent is passed (e.g., in unit tests)
-    if supervisor_agent is not None:
-        message = [HumanMessage(clean_brief)]
-        result = supervisor_agent.invoke({"messages": message})
-        if isinstance(result, dict) and "structured_response" in result:
-            return result["structured_response"]
-        if isinstance(result, SupervisorState):
-            return result
-
-    llm_model = get_llm()
-    if llm_model is None:
-        raise ValueError("Groq API key not configured. Set GROQ_API_KEY in .env or pass a mock supervisor_agent.")
-
-    system_prompt = get_system_prompt()
-    messages = [
-        SystemMessage(content=system_prompt),
-        HumanMessage(content=clean_brief[:4000]),
-    ]
-
-    try:
-        structured_llm = llm_model.with_structured_output(SupervisorState)
-        res = structured_llm.invoke(messages)
-        if isinstance(res, SupervisorState):
-            return res
-        elif isinstance(res, dict):
-            return SupervisorState(**res)
-    except Exception:
-        pass
-
-    try:
-        agent = get_default_agent()
-        if agent is not None:
-            result = agent.invoke({"messages": [HumanMessage(clean_brief[:4000])]})
-            if "structured_response" in result:
-                return result["structured_response"]
-    except Exception:
-        pass
-
-    # Direct JSON prompt fallback
-    json_instructions = (
-        f"{system_prompt}\n\n"
-        f"Deconstruct the following Research Brief into balanced tasks across ResearchAgent_1, ResearchAgent_2, and ResearchAgent_3.\n\n"
-        f"Brief:\n{clean_brief[:3000]}\n\n"
-        "Output ONLY a valid JSON object matching: "
-        '{"research_brief": "...", "tasks": [{"task_id": "task_1", "task_description": "...", "assigned_agent": "ResearchAgent_1", "status": "pending", "result": null}]}'
-    )
-    raw_resp = llm_model.invoke([HumanMessage(content=json_instructions)])
-    raw_text = raw_resp.content if hasattr(raw_resp, "content") else str(raw_resp)
-    json_match = re.search(r'\{.*\}', raw_text, flags=re.DOTALL)
-    if json_match:
-        data = json.loads(json_match.group(0))
-        return SupervisorState(**data)
-    raise ValueError(f"Could not parse supervisor output from: {raw_text[:200]}")
+    if supervisor_agent is None:
+        supervisor_agent = agent
+    message = [HumanMessage(brief)]
+    result = supervisor_agent.invoke({"messages": message})
+    return result["structured_response"]
 
 if __name__ == "__main__":
     message = [

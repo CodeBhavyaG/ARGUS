@@ -48,20 +48,6 @@ RESEARCH_BRIEF_INSTRUCTIONS = """{system_prompt}
 """
 
 
-def _clean_brief_text(raw: str) -> str:
-    if not raw:
-        return ""
-    # Strip <think>...</think> blocks
-    text = re.sub(r'<think>.*?</think>', '', raw, flags=re.DOTALL).strip()
-    
-    # If there is a thinking process text like "Here's a thinking process:" or similar before the first header,
-    # extract starting from the actual brief header
-    header_match = re.search(r'(#*\s*1\.\s*Research Question.*|#*\s*Research Brief.*|##*\s*Research Question.*)', text, flags=re.DOTALL | re.IGNORECASE)
-    if header_match:
-        text = header_match.group(1).strip()
-    return text
-
-
 class _PlanningAgent:
     def __init__(self, llm: Any, config: ResearchBriefConfig):
         self.llm, self.config = llm, config
@@ -79,11 +65,10 @@ class _PlanningAgent:
         if hasattr(response, "__await__"):
             response = await response
         if hasattr(response, "content"):
-            return _clean_brief_text(str(response.content))
+            return str(response.content)
         if isinstance(response, dict):
-            raw = str(response.get("content") or response.get("text") or json.dumps(response))
-            return _clean_brief_text(raw)
-        return _clean_brief_text(str(response))
+            return str(response.get("content") or response.get("text") or json.dumps(response))
+        return str(response)
 
     def _call_llm(self, prompt: str) -> str:
         provider = self.config.llm_provider.lower()
@@ -103,8 +88,7 @@ class _PlanningAgent:
                 kwargs["reasoning_effort"] = self.config.reasoning_effort
             client = Groq(api_key=self.config.llm_api_key, timeout=90.0)
             completion = client.chat.completions.create(**kwargs)
-            raw_content = completion.choices[0].message.content or ""
-            return _clean_brief_text(raw_content)
+            return completion.choices[0].message.content or ""
         elif provider == "openai":
             from openai import OpenAI
             client = OpenAI(api_key=self.config.llm_api_key, timeout=90.0)
@@ -117,8 +101,7 @@ class _PlanningAgent:
                 temperature=self.config.temperature,
                 max_tokens=self.config.max_completion_tokens,
             )
-            raw_content = completion.choices[0].message.content or ""
-            return _clean_brief_text(raw_content)
+            return completion.choices[0].message.content or ""
         return ""
 
 
