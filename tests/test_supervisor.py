@@ -15,8 +15,8 @@ if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
 
 from state import SupervisorState, ResearchTask
-from eval.evaluator import SupervisorEvaluator, VALID_AGENTS
-from eval.eval_cases import EVALUATION_CASES
+from eval.evaluator_supervisor import SupervisorEvaluator, VALID_AGENTS
+from eval.eval_cases_supervisor import EVALUATION_CASES
 
 
 class TestSupervisorPromptAndSetup(unittest.TestCase):
@@ -274,8 +274,8 @@ class TestBenchmarkDataset(unittest.TestCase):
 
     def test_dataset_json_file_sync(self):
         import json
-        json_path = project_root / "eval" / "dataset.json"
-        self.assertTrue(json_path.exists(), "eval/dataset.json should exist")
+        json_path = project_root / "eval" / "datasets" / "dataset_supervisor.json"
+        self.assertTrue(json_path.exists(), "eval/datasets/dataset_supervisor.json should exist")
         loaded_json = json.loads(json_path.read_text(encoding="utf-8"))
         self.assertEqual(len(loaded_json), len(EVALUATION_CASES))
         self.assertEqual([c["id"] for c in loaded_json], [c["id"] for c in EVALUATION_CASES])
@@ -286,8 +286,8 @@ class TestEvaluationPipelineArtifacts(unittest.TestCase):
 
     def test_evaluation_results_json_schema(self):
         import json
-        results_path = project_root / "eval" / "evaluation_results.json"
-        self.assertTrue(results_path.exists(), "eval/evaluation_results.json should exist")
+        results_path = project_root / "eval" / "evaluation_results_supervisor.json"
+        self.assertTrue(results_path.exists(), "eval/evaluation_results_supervisor.json should exist")
         results = json.loads(results_path.read_text(encoding="utf-8"))
         self.assertEqual(len(results), 7, "Should have 7 evaluated cases")
 
@@ -300,7 +300,7 @@ class TestEvaluationPipelineArtifacts(unittest.TestCase):
             self.assertGreaterEqual(entry["overall_score"], 8.0)
 
     def test_markdown_report_generation(self):
-        from eval.run_eval import generate_markdown_report
+        from eval.run_eval_supervisor import generate_markdown_report
         sample_results = [
             {
                 "case_id": "research_001",

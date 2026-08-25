@@ -9,6 +9,7 @@ class ResearchTask(TypedDict, total=False):
     assigned_agent: str
     status: str
     result: Optional[str]
+    sources: Optional[List[Dict[str, Any]]]
 
 
 class SupervisorState(BaseModel):
