@@ -30,6 +30,7 @@ class ResearchGraphState(TypedDict, total=False):
     offline: bool
 
 
+
 class State(BaseModel):
     """Pydantic state model for validation and backward-compatibility."""
     model_config = ConfigDict(extra="allow")
