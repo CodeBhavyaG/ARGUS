@@ -41,7 +41,7 @@ async def research_brief_node(state: ResearchGraphState) -> dict:
 async def supervisor_node(state: ResearchGraphState) -> dict:
     brief = state.get("research_brief", "")
     offline = state.get("offline", False)
-    
+
     if not brief:
         return {"tasks": [], "progress_logs": state.get("progress_logs", []) + ["⚠ Empty research brief"]}
 
@@ -95,11 +95,11 @@ def build_pipeline():
     workflow = StateGraph(ResearchGraphState)
     workflow.add_node("research_brief", research_brief_node)
     workflow.add_node("supervisor", supervisor_node)
-    
+
     workflow.add_edge(START, "research_brief")
     workflow.add_edge("research_brief", "supervisor")
     workflow.add_edge("supervisor", END)
-    
+
     return workflow.compile()
 
 
