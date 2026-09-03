@@ -5,12 +5,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
+if str(ROOT / "src") not in sys.path:
+    sys.path.insert(0, str(ROOT / "src"))
 
-from agent.ResearchBrief import (
-    ResearchBriefConfig,
-    ResearchBriefInput,
-    ResearchBriefService,
-)
+from sih_hackathon.research_brief.config import ResearchBriefConfig
+from sih_hackathon.research_brief.models import ResearchBriefInput
+from sih_hackathon.research_brief.service import ResearchBriefService
 from main import research_brief_node
 
 

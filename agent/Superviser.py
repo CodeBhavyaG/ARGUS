@@ -15,11 +15,11 @@ if str(project_root) not in sys.path:
 from state import SupervisorState
 
 load_dotenv()
-api_key = os.getenv("api_key")
+api_key = os.getenv("api_key") or os.getenv("GROQ_API_KEY")
 
 def get_llm(api_key: str | None = None, model_name: str = "qwen/qwen3.6-27b", temperature: float = 0.1) -> ChatGroq:
     """Initialize and return the Groq Chat model."""
-    key = api_key or os.getenv("api_key")
+    key = api_key or os.getenv("api_key") or os.getenv("GROQ_API_KEY")
     return ChatGroq(
         model_name=model_name,
         api_key=key,
