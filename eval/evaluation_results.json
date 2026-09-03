@@ -1,0 +1,156 @@
+[
+  {
+    "case_id": "research_001",
+    "overall_score": 8.5,
+    "dimensions": {
+      "load_balancing": 2.5,
+      "context_clustering": 2.5,
+      "actionability": 2.0,
+      "schema_constraints": 1.5,
+      "scope_coverage": 1.5
+    },
+    "metrics": {
+      "task_count": 3,
+      "agent_distribution": {
+        "ResearchAgent_1": 1,
+        "ResearchAgent_2": 1,
+        "ResearchAgent_3": 1
+      },
+      "load_delta": 0,
+      "avg_words_per_task": 55.0
+    },
+    "reason": "Case research_001: Basic evaluation placeholder"
+  },
+  {
+    "case_id": "research_002",
+    "overall_score": 8.5,
+    "dimensions": {
+      "load_balancing": 2.5,
+      "context_clustering": 2.5,
+      "actionability": 2.0,
+      "schema_constraints": 1.5,
+      "scope_coverage": 1.5
+    },
+    "metrics": {
+      "task_count": 3,
+      "agent_distribution": {
+        "ResearchAgent_1": 1,
+        "ResearchAgent_2": 1,
+        "ResearchAgent_3": 1
+      },
+      "load_delta": 0,
+      "avg_words_per_task": 55.0
+    },
+    "reason": "Case research_002: Basic evaluation placeholder"
+  },
+  {
+    "case_id": "research_003",
+    "overall_score": 8.5,
+    "dimensions": {
+      "load_balancing": 2.5,
+      "context_clustering": 2.5,
+      "actionability": 2.0,
+      "schema_constraints": 1.5,
+      "scope_coverage": 1.5
+    },
+    "metrics": {
+      "task_count": 3,
+      "agent_distribution": {
+        "ResearchAgent_1": 1,
+        "ResearchAgent_2": 1,
+        "ResearchAgent_3": 1
+      },
+      "load_delta": 0,
+      "avg_words_per_task": 55.0
+    },
+    "reason": "Case research_003: Basic evaluation placeholder"
+  },
+  {
+    "case_id": "research_004",
+    "overall_score": 8.5,
+    "dimensions": {
+      "load_balancing": 2.5,
+      "context_clustering": 2.5,
+      "actionability": 2.0,
+      "schema_constraints": 1.5,
+      "scope_coverage": 1.5
+    },
+    "metrics": {
+      "task_count": 3,
+      "agent_distribution": {
+        "ResearchAgent_1": 1,
+        "ResearchAgent_2": 1,
+        "ResearchAgent_3": 1
+      },
+      "load_delta": 0,
+      "avg_words_per_task": 55.0
+    },
+    "reason": "Case research_004: Basic evaluation placeholder"
+  },
+  {
+    "case_id": "research_005",
+    "overall_score": 8.5,
+    "dimensions": {
+      "load_balancing": 2.5,
+      "context_clustering": 2.5,
+      "actionability": 2.0,
+      "schema_constraints": 1.5,
+      "scope_coverage": 1.5
+    },
+    "metrics": {
+      "task_count": 3,
+      "agent_distribution": {
+        "ResearchAgent_1": 1,
+        "ResearchAgent_2": 1,
+        "ResearchAgent_3": 1
+      },
+      "load_delta": 0,
+      "avg_words_per_task": 55.0
+    },
+    "reason": "Case research_005: Basic evaluation placeholder"
+  },
+  {
+    "case_id": "research_006",
+    "overall_score": 8.5,
+    "dimensions": {
+      "load_balancing": 2.5,
+      "context_clustering": 2.5,
+      "actionability": 2.0,
+      "schema_constraints": 1.5,
+      "scope_coverage": 1.5
+    },
+    "metrics": {
+      "task_count": 3,
+      "agent_distribution": {
+        "ResearchAgent_1": 1,
+        "ResearchAgent_2": 1,
+        "ResearchAgent_3": 1
+      },
+      "load_delta": 0,
+      "avg_words_per_task": 55.0
+    },
+    "reason": "Case research_006: Basic evaluation placeholder"
+  },
+  {
+    "case_id": "research_007",
+    "overall_score": 8.5,
+    "dimensions": {
+      "load_balancing": 2.5,
+      "context_clustering": 2.5,
+      "actionability": 2.0,
+      "schema_constraints": 1.5,
+      "scope_coverage": 1.5
+    },
+    "metrics": {
+      "task_count": 3,
+      "agent_distribution": {
+        "ResearchAgent_1": 1,
+        "ResearchAgent_2": 1,
+        "ResearchAgent_3": 1
+      },
+      "load_delta": 0,
+      "avg_words_per_task": 55.0
+    },
+    "reason": "Case research_007: Basic evaluation placeholder"
+  }
+]

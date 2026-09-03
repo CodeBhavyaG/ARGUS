@@ -1,0 +1,44 @@
+[
+  {
+    "id": "research_001",
+    "category": "SIMPLE",
+    "research_query": "What are the major causes of urban air pollution?",
+    "context": "A city public-health team needs a neutral overview."
+  },
+  {
+    "id": "research_002",
+    "category": "COMPARATIVE",
+    "research_query": "Compare electric vehicles and hybrid vehicles in terms of cost, environmental impact, maintenance, and long-term adoption.",
+    "context": "Consumer policy briefing; do not assume a specific country."
+  },
+  {
+    "id": "research_003",
+    "category": "MULTI_DIMENSIONAL",
+    "research_query": "How has remote work affected employee productivity, company costs, employee satisfaction, and urban economies?",
+    "context": "Assess effects since 2020 across knowledge-work sectors."
+  },
+  {
+    "id": "research_004",
+    "category": "AMBIGUOUS",
+    "research_query": "What is the best AI policy?",
+    "context": "No jurisdiction, policy objective, or audience is provided."
+  },
+  {
+    "id": "research_005",
+    "category": "CONFLICTING_EVIDENCE",
+    "research_query": "Does social media use harm adolescent mental health?",
+    "context": "Need a balanced evidence review, not clinical advice."
+  },
+  {
+    "id": "research_006",
+    "category": "INSUFFICIENT_INFORMATION",
+    "research_query": "Investigate whether our intervention worked.",
+    "context": "No intervention description, outcome, population, baseline, or data access is supplied."
+  },
+  {
+    "id": "research_007",
+    "category": "COMPLEX",
+    "research_query": "What strategy should India pursue to reduce plastic pollution in the Ganges basin while protecting informal waste workers and small businesses?",
+    "context": "Policy analysis for the next five years."
+  }
+]

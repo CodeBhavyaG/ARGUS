@@ -49,7 +49,7 @@ async def research_brief_node(state: ResearchGraphState) -> dict:
 async def supervisor_node(state: ResearchGraphState) -> dict:
     brief = state.get("research_brief", "")
     offline = state.get("offline", False)
-    
+
     if not brief:
         return {"tasks": [], "progress_logs": state.get("progress_logs", []) + ["[!] Empty research brief"]}
 
