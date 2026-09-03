@@ -200,13 +200,13 @@ class ResearchAgent:
         }
 
         # Print Tool Call in Real Time
-        print(f"\n  ┌─ [TOOL CALL] {self.agent_id} -> web_search(query=\"{search_query}\")", flush=True)
+        print(f"\n  |-- [TOOL CALL] {self.agent_id} -> web_search(query=\"{search_query}\")", flush=True)
 
         # Run web search tool asynchronously in thread pool
         tool_results = await asyncio.to_thread(execute_web_search, search_query, 4)
 
         # Print Tool Output in Real Time
-        print(f"  └► [TOOL OUTPUT] Retrieved {len(tool_results)} empirical source snippets:", flush=True)
+        print(f"  |-> [TOOL OUTPUT] Retrieved {len(tool_results)} empirical source snippets:", flush=True)
         for idx, item in enumerate(tool_results, 1):
             title = item.get("title", "Source")[:65]
             url = item.get("url", "")

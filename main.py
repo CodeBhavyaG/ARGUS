@@ -37,12 +37,12 @@ async def research_brief_node(state: ResearchGraphState) -> dict:
     result = await run_research_brief(query=query, context=context, offline=offline)
 
     mode_label = "offline domain blueprint" if offline else "live model"
-    print(f"  ✓ Brief created successfully ({mode_label})")
+    print(f"  [OK] Brief created successfully ({mode_label})")
     return {
         "research_brief": result.brief,
         "brief_self_evaluation": result.self_evaluation,
         "supervisor_input": result.brief,
-        "progress_logs": state.get("progress_logs", []) + [f"✓ Research Brief Agent created brief ({mode_label})"],
+        "progress_logs": state.get("progress_logs", []) + [f"[OK] Research Brief Agent created brief ({mode_label})"],
     }
 
 
@@ -51,7 +51,7 @@ async def supervisor_node(state: ResearchGraphState) -> dict:
     offline = state.get("offline", False)
     
     if not brief:
-        return {"tasks": [], "progress_logs": state.get("progress_logs", []) + ["⚠ Empty research brief"]}
+        return {"tasks": [], "progress_logs": state.get("progress_logs", []) + ["[!] Empty research brief"]}
 
     print("\n[STAGE 2/3] Supervisor Agent analyzing brief and delegating missions...")
 
@@ -79,27 +79,27 @@ async def supervisor_node(state: ResearchGraphState) -> dict:
                 "result": None,
             },
         ]
-        print("  ✓ Supervisor decomposed into 3 balanced missions (offline)")
+        print("  [OK] Supervisor decomposed into 3 balanced missions (offline)")
         return {
             "tasks": tasks,
             "final_summary": None,
-            "progress_logs": state.get("progress_logs", []) + ["✓ Supervisor Agent decomposed brief into 3 balanced missions (offline)"],
+            "progress_logs": state.get("progress_logs", []) + ["[OK] Supervisor Agent decomposed brief into 3 balanced missions (offline)"],
         }
 
     try:
         sup_state = run_supervisor(brief)
         tasks_data = [t if isinstance(t, dict) else t.model_dump() for t in sup_state.tasks]
-        print(f"  ✓ Supervisor decomposed into {len(tasks_data)} balanced missions (live LLM)")
+        print(f"  [OK] Supervisor decomposed into {len(tasks_data)} balanced missions (live LLM)")
         return {
             "tasks": tasks_data,
             "final_summary": sup_state.final_summary,
-            "progress_logs": state.get("progress_logs", []) + [f"✓ Supervisor Agent decomposed brief into {len(tasks_data)} balanced missions (live)"],
+            "progress_logs": state.get("progress_logs", []) + [f"[OK] Supervisor Agent decomposed brief into {len(tasks_data)} balanced missions (live)"],
         }
     except Exception as exc:
-        print(f"  ✗ Supervisor error: {exc}")
+        print(f"  [X] Supervisor error: {exc}")
         return {
             "tasks": [],
-            "progress_logs": state.get("progress_logs", []) + [f"✗ Supervisor Agent error: {exc}"],
+            "progress_logs": state.get("progress_logs", []) + [f"[X] Supervisor Agent error: {exc}"],
         }
 
 
@@ -110,15 +110,15 @@ async def research_execution_node(state: ResearchGraphState) -> dict:
     offline = state.get("offline", False)
 
     if not tasks:
-        return {"tasks": tasks, "progress_logs": state.get("progress_logs", []) + ["⚠ No tasks to execute"]}
+        return {"tasks": tasks, "progress_logs": state.get("progress_logs", []) + ["[!] No tasks to execute"]}
 
     print(f"\n[STAGE 3/3] Research Agents executing {len(tasks)} assigned missions...")
     executed_tasks = await run_research_agents(tasks, brief, query, offline=offline)
-    print("  ✓ All research missions successfully executed!")
+    print("  [OK] All research missions successfully executed!")
 
     return {
         "tasks": executed_tasks,
-        "progress_logs": state.get("progress_logs", []) + [f"✓ Executed {len(executed_tasks)} research missions across Research Agents"],
+        "progress_logs": state.get("progress_logs", []) + [f"[OK] Executed {len(executed_tasks)} research missions across Research Agents"],
     }
 
 
