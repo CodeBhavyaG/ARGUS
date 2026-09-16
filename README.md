@@ -1,4 +1,4 @@
-# SIH-Hackathon
+# ARGUS
 
 Python Research Brief Agent prototype with Groq support, evaluation tooling, and a LangGraph-compatible node.
 
